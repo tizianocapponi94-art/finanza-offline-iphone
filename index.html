@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0c1726"><meta name="description" content="Finanze personali offline"><link rel="icon" href="data:,"><title>Finanza Offline · iPhone</title><link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Finanza Offline">
+<meta name="application-name" content="Finanza Offline">
+<link rel="stylesheet" href="./style.css"></head>
+<body><div class="shell">
+<header class="masthead"><div class="brand"><span class="brandmark">0</span><div><b>FINANZA</b><small>iPhone · zero · grafici V33</small></div></div><span class="offline-tag"><span class="status-dot"></span> DATI LOCALI</span></header>
+<aside class="ios-install-panel" id="iosInstallPanel" hidden aria-label="Installazione iPhone">
+ <span class="ios-install-title">Installa Finanza Offline sul tuo iPhone</span>
+ <p>In <strong>Safari</strong>, tocca <strong>Condividi</strong> e poi <strong>Aggiungi alla schermata Home</strong>. Avvia l’app dall’icona: i dati resteranno sul tuo dispositivo.</p>
+ <button type="button" id="iosInstallDismiss">Ho capito</button>
+</aside>
+<nav class="tabs tabs-v5" aria-label="Sezioni">
+<button class="tab v29-home-tab active" type="button" data-tab="home">Panoramica</button>
+<button class="tab" type="button" data-tab="accounts">Conti</button>
+<button class="tab" type="button" data-tab="income">Entrate in attesa</button>
+<button class="tab" type="button" data-tab="funds">Fondi</button>
+<button class="tab" type="button" data-tab="fixed">Spese fisse</button>
+<button class="tab" type="button" data-tab="extra">Spese extra</button>
+<button class="tab" type="button" data-tab="installments">Rateizzazioni</button>
+<button class="tab" type="button" data-tab="calendar">Calendario</button>
+<button class="tab" type="button" data-tab="analytics">Analisi spese</button>
+<button class="tab" type="button" data-tab="backup">Backup</button>
+</nav>
+<main id="home" class="tab-page">
+<div id="v32EmptyNotice" class="panel v32-blank-state">
+  <strong>Parti da zero</strong>
+  <span>Vai in <b>Conti</b> per inserire i saldi, poi aggiungi entrate e spese. Nessun importo viene creato automaticamente.</span>
+ </div>
+<section class="v17-main-hero v19-main-hero" aria-label="Disponibilità prima della prossima entrata">
+ <div class="v25-wealth-mini"><span>Patrimonio totale</span><strong id="v5Wealth">—</strong></div>
+ <div class="v19-net-main">
+  <span>Netto spendibile fino alla prossima entrata</span>
+  <strong id="v17NextHeadline">—</strong>
+ </div>
+ <div class="v19-two-numbers">
+  <button class="v19-expenses v21-hero-trigger" type="button"
+   data-v21-panel="expenses" aria-expanded="false" aria-controls="v21HeroDetail">
+   <span>Spese da sostenere fino alla prossima entrata</span>
+   <strong id="v19CycleExpenses">—</strong>
+  </button>
+  <button class="v19-funds v21-hero-trigger" type="button"
+   data-v21-panel="funds" aria-expanded="false" aria-controls="v21HeroDetail">
+   <span>Fondi accumulati fino alla prossima entrata</span>
+   <strong id="v19CycleFunds">—</strong>
+  </button>
+ </div>
+ <div id="v21HeroDetail" class="v21-hero-detail" hidden aria-live="polite"></div>
+</section>
+<div hidden aria-hidden="true" id="v25LegacyHidden"><strong id="v5FreeNow">—</strong><strong id="v5FreeEnd">—</strong></div>
+<section id="v14RiskSummary" class="panel v14-risk-panel v20-minimum-card" aria-label="Liquidità minima fra le entrate nei prossimi 90 giorni"></section>
+<section class="panel v20-spent-card" aria-label="Spese libere registrate nel mese">
+  <div class="v20-spent-head">
+    <span>Netto speso questo mese</span>
+    <strong id="v5NetSpent">—</strong>
+  </div>
+  <details class="v20-spent-details">
+    <summary>Vedi su cosa hai speso <span id="v5QuickCount"></span></summary>
+    <div id="v20CategoryTotals" class="v20-category-list"></div>
+    <div id="v5QuickHistory" class="v20-expense-history"></div>
+  </details>
+</section>
+<section class="panel quick-panel">
+ <div class="section-heading"><div><span class="eyebrow">DUE TOCCHI</span><h2>Registra spesa</h2></div><span class="pill">Netto libero</span></div>
+ <form id="v5QuickForm"><label class="quick-amount">Quanto hai speso? (€)<input id="v5QuickAmount" type="number" step="0.01" inputmode="decimal" min="0.01" max="100000" placeholder="Es. 5,00" required></label>
+ <label class="v6-source">Pagamento da <select id="v6QuickAccount"><option value="Cash">Contanti</option><option value="Revolut">Revolut</option><option value="Isybank">Isybank</option><option value="Intesa">Intesa</option></select></label><div class="quick-categories" id="v5Categories" role="group" aria-label="Tipologia di spesa">
+   <button type="button" data-quick-kind="Colazione" class="quick-kind active">Colazione</button>
+   <button type="button" data-quick-kind="Tabacco" class="quick-kind">Tabacco</button>
+   <button type="button" data-quick-kind="Cena" class="quick-kind">Cena</button>
+   <button type="button" data-quick-kind="Sfizi" class="quick-kind">Sfizi</button>
+   <button type="button" data-quick-kind="Altro" class="quick-kind">Altro</button>
+ </div><button class="primary" type="submit">Registra</button></form>
+ <p class="small-hint">Spesa libera registrata su carta o contanti. Le somme destinate a fondi sono protette e non sono liberamente spendibili.</p>
+
+</section>
+<section class="months" id="v5Months"><div class="section-heading"><div><span class="eyebrow">PIANO FINANZIARIO</span><h2>Proiezioni dei 6 mesi</h2></div></div><div id="v5MonthCards"></div></section>
+<section class="panel goal-panel"><div class="section-heading"><div><span class="eyebrow">RISPARMI</span><h2>Obiettivi</h2></div></div>
+ <div class="goal-row"><span>Casa futura</span><strong id="houseGoal">—</strong></div>
+ <div class="goal-row"><span>Viaggi</span><strong id="travelGoal">—</strong></div>
+ <p class="small-hint">Gli obiettivi sono somme programmate, non fondi già trasferiti. Per ora i fondi accantonati partono da 0 €.</p>
+</section>
+</main>
+<main id="accounts" class="tab-page" hidden>
+<section class="panel v32-config">
+ <div class="section-heading"><div><span class="eyebrow">PRIMA CONFIGURAZIONE</span><h2>I tuoi conti</h2></div></div>
+ <p class="small-hint">Rinomina i conti, poi inserisci i saldi reali usando Verifica saldo reale. Le entrate e le spese si aggiungono negli altri tab. Nessun importo viene creato automaticamente.</p>
+ <form id="v32NamesForm">
+  <div id="v32NamesFields" class="form-grid"></div>
+  <button type="submit" class="secondary">Salva nomi dei conti</button>
+ </form>
+</section>
+
+ <div class="welcome compact"><span class="eyebrow">GESTIONE SALDI</span><h1>Conti</h1></div>
+<section class="panel"><div class="section-heading"><div><span class="eyebrow">CONTROLLO</span><h2>Quanti soldi ci sono e quanti ne servono</h2></div></div>
+  
+  <div id="walletAccounts" class="wallet-accounts"></div>
+<div id="v9MoveSuggestions" hidden aria-hidden="true"></div>
+ <div id="v8WalletAdvice" hidden aria-hidden="true"></div>
+ <div id="v17ReserveTransfer" class="v17-reserve-control"></div>
+ <details class="v9-transfer-list" id="v25TransferHistoryPanel" hidden>
+  <summary>Spostamenti già registrati · annullabili</summary>
+  <div id="v9TransferHistory"></div>
+ </details>
+  <p class="small-hint">I saldi vengono aggiornati dalle operazioni che registri. Confrontali periodicamente con la banca.</p><p class="small-hint" id="v6ExternalFoodNote"></p>
+  <p class="small-hint">Nessun conto è preassegnato alle spese. Scegli tu conto, importo e scadenza.</p>
+</section>
+</main>
+<main id="calendar" class="tab-page" hidden>
+ <div class="welcome compact"><span class="eyebrow">EQUITY GIORNALIERA</span>
+ <h1>Calendario dei prossimi 6 mesi</h1>
+ <p>Ogni giorno mostra il netto disponibile fino alla successiva entrata prevista. Tocca una data per scoprire le scadenze, i fondi e il netto del giorno.</p></div>
+ <section class="panel v23-calendar-panel">
+  <div class="v23-legend">
+   <span><i class="v23-dot v23-dot-in"></i> Entrate</span>
+   <span><i class="v23-dot v23-dot-out"></i> Spese fisse</span>
+   <span><i class="v23-dot v23-dot-extra"></i> Extra</span>
+   <span><i class="v23-dot v23-dot-fund"></i> Fondi</span>
+  </div>
+  <p class="v23-legend-hint">Importo giornaliero: <b>netto fino alla prossima entrata</b>, arrotondato all’euro. Tocca per i centesimi, la prossima entrata e le spese.</p>
+  <div id="v17CalendarGrid" class="v23-calendar-layout"></div>
+  <p id="v23CalendarPeriod" class="small-hint"></p>
+ </section>
+ <section class="panel v23-day-detail" id="v17DateDetails" aria-live="polite"></section>
+ <p class="small-hint">Le spese già pagate sono comprese nei saldi: nei dettagli sono distinte dalle scadenze future per evitare doppi conteggi. I giorni precedenti alla base del piano non hanno un netto ricostruito. Il netto di una data non garantisce tutte le scadenze successive.</p>
+</main>
+<main id="fixed" class="tab-page" hidden><div class="welcome compact"><span class="eyebrow">IMPEGNI OBBLIGATORI</span><h1>Spese fisse</h1><p>Seleziona <b>Pagato</b> quando vuoi addebitare il conto, oppure <b>Già pagato nel saldo</b> per non contare due volte. Le voci possono essere eliminate e ripristinate. Aggiungi spese fisse manualmente e scegli il conto su cui saranno addebitate.</p></div>
+ <div class="period-picker"><button type="button" data-move-month="-1">‹</button><input id="v5FixedMonth" class="period-month" type="month" min="2026-11" max="2029-10"><button type="button" data-move-month="1">›</button></div>
+ <div class="panel"><div class="section-heading"><h2>Scadenze in ordine di data</h2><span class="pill" id="v5FixedTotal">—</span></div><div id="v5FixedRows"></div>
+  <button type="button" class="secondary add-entry-btn" data-add="fixed">+ Aggiungi spesa fissa</button>
+ </div><div hidden id="v5FoodStatus" aria-hidden="true"></div><button hidden id="v5UpdateFood" type="button">Alimentari</button>
+</main>
+<main id="funds" class="tab-page" hidden>
+ <div class="welcome compact"><span class="eyebrow">RISERVE DI DENARO</span>
+ <h1>Fondi</h1>
+ <p>Fondi protetti per le spese extra che decidi di programmare. Un importo accantonato <b>non è ancora pagato</b>: spunta “Pagato” soltanto quando avviene l’addebito reale.</p></div>
+ <div class="quick-counters"><div class="mini-tile v32-private-feature" hidden><span>Fondo tasse disponibile</span><strong id="v8FundsTaxTotal">0,00 €</strong></div>
+ <div class="mini-tile"><span>Fondi spese extra</span><strong id="v8FundsExtraTotal">0,00 €</strong></div></div>
+ <section class="panel v11-house-section v32-private-feature" hidden>
+  <div class="section-heading"><div><span class="eyebrow">ISYBANK · DUE ABITAZIONI</span><h2>Fondi fissi casa</h2></div></div>
+  <p class="small-hint">Nessuna nuova quota di fondi casa richiesta a novembre. Dal <b>18 dicembre</b> (dopo stipendio e affitto): condominio prima casa 50 €, condominio casa affittata 50 €, luce prima casa 150 € stimati e alimentari 300 € destinati al cointestato esterno. La bolletta dell’immobile affittato si aggiunge solo quando ne conosci importo e data. I 10 € della seconda SIM sono già compresi nel TIM da 35 €.</p>
+  <div class="quick-counters"><div class="mini-tile"><span>Da coprire nel mese (non pagati)</span><strong id="v11HouseTotal">0,00 €</strong></div>
+   <div class="mini-tile"><span>Già indicati come accantonati</span><strong id="v11HouseProtected">0,00 €</strong></div></div>
+  <div class="period-picker"><button type="button" data-v11-house-move="-1">‹</button>
+   <input id="v11HouseMonth" class="period-month" type="month" min="2026-11" max="2029-10" value="2026-11">
+   <button type="button" data-v11-house-move="1">›</button></div>
+  <div id="v16JanuaryHouseNote" class="v16-thailand-note" hidden>Nessuna eccezione personale preimpostata.</div>
+  <div id="v11HouseList"></div>
+  <button type="button" class="secondary add-entry-btn" data-v11-new-bill>+ Inserisci bolletta casa affittata</button>
+  <p class="small-hint">“Accantonato” segna soldi protetti su Isybank, senza addebitarli. I fondi casa iniziano il 18 dicembre, dopo gli accrediti. Solo quando registri un pagamento effettivo, l’app aggiorna il saldo. La data del fondo è indicativa, non necessariamente quella dell’addebito.</p>
+ </section>
+ <section class="panel v32-private-feature" hidden>
+  <div class="section-heading"><div><span class="eyebrow">DA MARZO 2027</span><h2>Fondi per le tasse</h2></div></div>
+  <div id="v8FundCoverage" class="v8-coverage"></div>
+  <p class="small-hint">La quota fiscale è una stima basata sulle scadenze presenti nel piano. L'importo esatto sarà quello dei tuoi F24 e va verificato con il commercialista. Nessuna riserva fiscale nuova è prevista prima di marzo 2027.</p>
+  <div class="period-picker"><button type="button" data-v8-month-move="-1">‹</button>
+   <input id="v8FundMonth" class="period-month" type="month" min="2026-11" max="2029-10" value="2027-03">
+   <button type="button" data-v8-month-move="1">›</button></div>
+  <div id="v8TaxRows"></div>
+  <p class="small-hint">Spunta solo quando hai davvero accantonato l'importo. È una riserva interna al conto selezionato, non un bonifico né una spesa pagata.</p>
+ </section>
+ <section class="panel v32-private-feature" hidden><div class="section-heading"><h2>F24 futuri da pagare</h2></div>
+  <p class="small-hint">Queste sono uscite fiscali previste: gli F24 vengono pagati una volta sola, con la possibilità di correggere la spunta. La riserva già protetta viene liberata per coprire il pagamento.</p>
+  <div id="v8TaxBillRows"></div></section>
+ <section class="panel"><div class="section-heading"><h2>Fondi per spese extra</h2></div>
+  <p class="small-hint">La data di ogni spesa resta invariata. Puoi proteggere subito una cifra a tua scelta e, separatamente, programmare quanto vorresti accantonare ogni mese.</p>
+  <div id="v8ExtraFundRows"></div>
+  <details class="v8-event-details"><summary>Somme già accantonate · possibilità di liberarle</summary>
+   <div id="v8ExtraFundEvents"></div></details>
+ </section>
+</main>
+<main id="extra" class="tab-page" hidden><div class="welcome compact"><span class="eyebrow">NON RICORRENTI</span><h1>Spese extra</h1><p>Seleziona <b>Pagato</b> per registrare l’uscita, <b>Già pagato nel saldo</b> per non addebitare di nuovo oppure <b>Da pagare</b>. Puoi eliminare e ripristinare una voce.</p></div>
+ <div class="period-picker"><button type="button" data-move-month="-1">‹</button><input id="v5ExtraMonth" class="period-month" type="month" min="2026-11" max="2029-10"><button type="button" data-move-month="1">›</button></div>
+ <div class="panel"><div class="section-heading"><h2>Spese programmate</h2><span class="pill" id="v5ExtraTotal">—</span></div><div id="v5ExtraRows"></div><button class="secondary add-entry-btn" type="button" data-add="extra">+ Aggiungi spesa extra</button></div>
+</main>
+<main id="income" class="tab-page" hidden><div class="welcome compact"><span class="eyebrow">INCASSI DA CONTROLLARE</span><h1>Entrate in attesa</h1><p>Modifica l’importo previsto per il mese, poi seleziona <b>Incassato</b> quando ricevi davvero il denaro. Se è già nel saldo, scegli <b>Già incassato</b>. Le entrate si possono anche eliminare e ripristinare.</p></div>
+ <div class="period-picker"><button type="button" data-move-month="-1">‹</button><input id="v5IncomeMonth" class="period-month" type="month" min="2026-11" max="2029-10"><button type="button" data-move-month="1">›</button></div>
+ <div class="panel"><div class="section-heading"><h2>Entrate previste</h2><span class="pill" id="v5IncomeTotal">—</span></div><div id="v5IncomeRows"></div><button class="secondary add-entry-btn" type="button" data-add="income">+ Aggiungi entrata</button><button class="secondary add-entry-btn v32-private-feature" type="button" hidden data-v11-new-refund>+ + Rimborso registrato</button></div>
+</main>
+<main id="installments" class="tab-page" hidden>
+ <div class="welcome compact"><span class="eyebrow">DEBITI E SCADENZE</span>
+ <h1>Rateizzazioni</h1>
+ <p>Registra mutui e finanziamenti per sapere quante rate hai pagato, quante ne restano, quando finiscono e quanto devi ancora restituire.</p></div>
+ <section class="panel v24-loans-summary" id="v24LoanSummary" aria-live="polite"></section>
+ 
+ <section class="panel v24-loan-register">
+  <div class="section-heading"><div><span class="eyebrow">GIÀ NEL PIANO</span><h2>Rate riconosciute</h2></div></div>
+  <p class="small-hint">Queste sono possibili rate nelle Spese fisse: scegli una voce per preparare la sua scheda, poi inserisci i dati del contratto. Nessun nuovo addebito viene creato.</p>
+  <div id="v24LoanSuggestions" class="v24-loan-suggestions"></div>
+ </section>
+ <section class="panel v24-loan-register">
+  <div class="section-heading"><div><span class="eyebrow">SCHEDA FINANZIAMENTO</span><h2 id="v24LoanFormTitle">Aggiungi mutuo o finanziamento</h2></div></div>
+  <form id="v24LoanForm">
+   <input id="v24LoanId" type="hidden">
+   <div class="form-grid">
+    <label class="wide">Nome del finanziamento<input id="v24LoanName" maxlength="85" required placeholder="Es. Mutuo casa"></label>
+    <label>Tipo<select id="v24LoanKind"><option value="Mutuo">Mutuo</option><option value="Prestito">Prestito</option><option value="Acquisto rateale">Acquisto rateale</option><option value="Altro">Altro</option></select></label>
+    <label>Rata mensile (€)<input id="v24LoanMonthly" type="number" min="0.01" max="100000" step="0.01" inputmode="decimal" required></label>
+    <label>Rate complessive<input id="v24LoanCount" type="number" min="1" max="1200" step="1" required></label>
+    <label>Rate già pagate<input id="v24LoanPaid" type="number" min="0" max="1200" step="1" required placeholder="0"></label>
+    <label>Già versato (€), inclusi acconti<input id="v26LoanPaidAmount" type="number" min="0" max="100000000" step="0.01" inputmode="decimal" placeholder="Facoltativo"></label>
+    <label>Prossima rata da pagare<input id="v24LoanNextDate" type="date" min="2026-01-01" max="2100-12-31" required></label>
+    <label>Totale contrattuale da restituire (€)<input id="v24LoanTotal" type="number" min="0.01" max="100000000" step="0.01" inputmode="decimal" placeholder="Facoltativo"></label>
+   </div>
+   <details class="v27-principal-editor"><summary>Mutuo: capitale iniziale e capitale residuo (facoltativo)</summary>
+    <div class="form-grid">
+      <label>Capitale iniziale (€)<input id="v27PrincipalOriginal" type="number" min="0" max="100000000" step="0.01" inputmode="decimal" placeholder="Es. 100000"></label>
+      <label>Capitale residuo stimato (€)<input id="v27PrincipalRemaining" type="number" min="0" max="100000000" step="0.01" inputmode="decimal" placeholder="Es. 50000"></label>
+    </div>
+    <p class="small-hint">È il capitale non ancora rimborsato, non la somma delle rate future comprensive di interessi. La stima resta riferita alla data dell’ultimo documento.</p>
+   </details>
+   <div class="form-grid">
+    <label class="wide">Collega a una voce già nelle Spese fisse<select id="v24LoanLink"><option value="">Nessun collegamento: aggiornamento manuale</option></select></label>
+    <label class="wide">Note (facoltative)<input id="v24LoanNote" maxlength="180" placeholder="Banca, riferimento, eventuale ultima rata differente"></label>
+   </div>
+   <p class="small-hint">Se non indichi il totale contrattuale, useremo rata × numero di rate come <b>stima del totale da rimborsare</b>, non come capitale residuo certificato. Il totale già versato comprende gli eventuali acconti e le rate precedenti alla prossima scadenza. Le rate nuove confermate nelle Spese fisse sono conteggiate a parte, senza doppio addebito. Le rate devono essere inserite manualmente in questa scheda.</p>
+   <div class="v24-loan-form-actions"><button type="submit" class="primary" id="v24LoanSubmit">Salva finanziamento</button>
+    <button type="button" class="secondary" id="v24LoanCancel" hidden>Annulla modifica</button></div>
+  </form>
+ </section>
+ <section class="panel v24-loan-register">
+  <div class="section-heading"><div><span class="eyebrow">RIEPILOGO</span><h2>I miei debiti</h2></div></div>
+  <div id="v24LoanCards"></div>
+ </section>
+ <p class="small-hint">Le rate future e il capitale residuo sono dati diversi: aggiorna i valori usando il contratto o un rendiconto ufficiale.</p>
+</main>
+<main id="analytics" class="tab-page" hidden>
+ <div class="welcome compact"><span class="eyebrow">CONTABILITÀ PERSONALE</span><h1>Analisi spese</h1></div>
+ <section class="panel v32-chart-panel" id="v32AnalyticsChart" aria-label="Andamento economico">
+  <div class="v32-graph-top">
+   <div><span class="eyebrow">ANDAMENTO NEL TEMPO</span><h2 id="v32GraphHeading">Netto fino alla prossima entrata</h2></div>
+  </div>
+  <div class="v32-graph-controls">
+   <label>Visualizzazione
+    <select id="v32GraphMode" aria-label="Scegli cosa visualizzare">
+     <option value="cycle">Netto fino alla prossima entrata</option>
+     <option value="gross">Lordo · patrimonio totale</option>
+     <option value="cash">Lordo e netto dopo fondi</option>
+     <option value="spending">Uscite cumulate dal 1° novembre</option>
+     <option value="fixed">Spese fisse mensili</option>
+     <option value="extra">Spese extra mensili</option>
+     <option value="funds">Fondi protetti nel tempo</option>
+     <option value="all">Tutte le uscite mensili</option>
+     <option value="loans">Rate negli anni</option>
+     <option value="margin">Netto teorico negli anni</option>
+    </select>
+   </label>
+   <label>Periodo
+    <select id="v32GraphWindow" aria-label="Intervallo di visualizzazione">
+     <option value="1m">1 mese</option>
+     <option value="3m">3 mesi</option>
+     <option value="6m" selected>6 mesi</option>
+    </select>
+   </label>
+  </div>
+  <div class="v32-chart-headline">
+   <div><span id="v32GraphRange">Dal 1° novembre 2026</span>
+    <strong id="v32GraphValue">—</strong></div>
+   <span class="v32-chart-units">€ / <span id="v32GraphUnits">giorni</span></span>
+  </div>
+  <div id="v32GraphLegend" class="v32-graph-legend"></div>
+  <div class="v32-graph-display" id="v32GraphSvg"></div>
+  <div class="v32-graph-scrub">
+   <div class="v32-scrub-top"><span>Esplora le date e gli importi</span><strong id="v32GraphSliderDate">—</strong></div>
+   <input type="range" id="v32GraphSlider" min="0" max="1" step="1" value="0" aria-label="Scorri giorni e importi del grafico">
+  </div>
+  <div class="v32-point-detail" id="v32SelectedPoint" aria-live="polite"></div>
+  <p class="v32-chart-interpretation" id="v32GraphIntro"></p>
+  <p class="v32-chart-source" id="v32GraphSource"></p>
+ </section>
+ <section class="panel v32-analytics-current"><div class="section-heading"><h2>Il mese attuale</h2></div><div id="v5Analytics"></div></section>
+</main>
+<main id="backup" class="tab-page" hidden><div class="welcome compact"><span class="eyebrow">I TUOI DATI</span><h1>Backup e aggiornamenti</h1><p>Il registro rimane sul telefono, senza server né collegamenti bancari.</p></div>
+ <section class="panel info-panel"><h2>Esporta tutti i dati</h2><p>Scarica un JSON contenente saldi, spese quotidiane, scadenze spuntate, entrate e fondi. Puoi inviarmelo per aggiornare insieme il piano.</p><button id="exportButton" class="primary" type="button">Esporta backup JSON</button></section>
+ <section class="panel info-panel"><h2>Importa un aggiornamento</h2><p>Importa un JSON aggiornato. Le spese e le spunte già salvate sul telefono vengono conservate.</p><button id="importButton" class="secondary" type="button">Importa file JSON</button></section>
+ <section class="panel info-panel"><h2>Verifica estratto conto</h2><p>I movimenti importati non vengono sottratti automaticamente. L'estratto serve come verifica occasionale, non per registrare ogni spesa.</p><details><summary>Movimenti dell'ultimo estratto</summary><div id="v5StatementReview"></div></details></section>
+ <p class="safety">Il backup JSON contiene dati finanziari privati. Conservalo al sicuro e non disinstallare l'app prima di esportarlo.</p>
+</main>
+<div class="modal-cover" id="v5AddModal" hidden><div class="modal-panel"><div class="section-heading"><h2 id="v5AddTitle">Aggiungi voce</h2><button type="button" class="modal-close" id="v5ModalClose">×</button></div>
+ <form id="v5AddForm"><label>Descrizione<input id="v5AddName" required maxlength="80" placeholder="Es. Nuova rata"></label>
+ <div class="form-grid"><label>Importo (€)<input id="v5AddAmount" type="number" min="0.01" step="0.01" inputmode="decimal" required></label>
+ <label>Scadenza<input id="v5AddDate" type="date" required min="2026-11-01" max="2029-10-31"></label>
+ <label>Conto<select id="v5AddAccount"><option value="Isybank">Isybank</option><option value="Intesa">Intesa</option><option value="Revolut">Revolut</option><option value="Cash">Cash</option></select></label>
+ <label>Ripetizione<select id="v5AddRepeat"><option value="once">Solo questa volta</option><option value="monthly">Ogni mese</option></select></label><label id="v32UntilLabel" hidden>Ultimo mese di ripetizione (facoltativo)<input type="month" id="v32AddUntil"></label></div>
+ <label>Note (facoltative)<input id="v5AddNote" maxlength="200" placeholder="Motivo, durata, riferimento"></label>
+ <div class="modal-actions"><button class="secondary" type="button" id="v5AddCancel">Annulla</button><button class="primary" type="submit">Salva voce</button></div></form>
+ </div></div>
+<div id="message" class="message" role="status" aria-live="polite" hidden></div>
+</div><script src="./logic.js"></script><script src="./iphone.js"></script></body></html>
